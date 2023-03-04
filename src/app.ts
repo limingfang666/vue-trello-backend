@@ -2,10 +2,11 @@
  * @Description:项目启动入口文件
  * @Author: lmfang
  * @Date: 2022-09-20 16:15:53
- * @LastEditTime: 2022-11-16 16:34:01
+ * @LastEditTime: 2023-03-04 13:12:11
  * @LastEditors: lmfang
  */
 import configs from './configs/index'
+// 因为 `Koa` 并不是 `TS` 编写的，且官方包中也没有提供对应的类型声明文件，所以我们需要单独安装   npm i -D @types/koa
 import Koa, { Context, Next } from 'koa'
 
 //koa-ts-controllers相关依赖
@@ -84,6 +85,10 @@ app.use(async (ctx: Context, next: Next) => {
     }))
     app.use(router.routes());
 
+    //通过 `ts-node-dev` 工具来直接帮助我们编译并运行 `ts` 文件，同时它还有热重启的功能
+    // npm i -D ts-node-dev
+    // 同时因为 ts-node-dev 需要编译ts，所以还需要安装 typescript
+    // npm i -D typescript
     app.listen(configs.server.port, Number(configs.server.host), () => {
         console.log(`服务启动成功： http://${configs.server.host}:${configs.server.port}`);
     });
