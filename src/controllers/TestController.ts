@@ -6,7 +6,7 @@
  * @LastEditors: lmfang
  */
 
-import { Controller, Get, Post, Params, Query, Body, Header, Ctx } from 'koa-ts-controllers'
+import { Controller, Get, Post, Params, Query, Body, Header, Ctx,Flow } from 'koa-ts-controllers'
 // 验证前端数据格式是否错误
 import { GetUserQuery, TestPostUserBody } from '../validators/GetUserQueryTest';
 // 验证业务逻辑错误
@@ -14,10 +14,13 @@ import Boom from '@hapi/Boom';
 // ctx返回
 import { Context } from 'koa'
 
+import authorization from '../middlewares/authorization'
+
 @Controller("/test")
 class TestController {
 
     @Get('/hello')
+    @Flow([authorization])
     async sayHello(a: any) {
         // 测试错误处理，没有添加错误处理：{"error":"Internal Server Error"}
         //添加错误处理后报错： {"statusCode":500,"error":"Internal Server error","message":"An internal server error occurred"}

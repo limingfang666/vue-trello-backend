@@ -58,7 +58,7 @@ app.use(async (ctx: Context, next: Next) => {
             }
 
             // 500错误以外，其他业务逻辑本身存在的错误另外处理
-            console.log(err);
+            console.log(err+"----------------");
             if (err.output) {
                 status = err.output.statusCode;
                 body = { ...err.output.payload }

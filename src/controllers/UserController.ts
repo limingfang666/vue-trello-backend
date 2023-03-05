@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lmfang
  * @Date: 2022-11-09 17:05:37
- * @LastEditTime: 2022-12-02 10:45:37
+ * @LastEditTime: 2023-03-05 12:56:27
  * @LastEditors: lmfang
  */
 
@@ -82,7 +82,8 @@ class UserController {
             name: loginUser.name,
         }
 
-        let token = jwt.sign(userInfo, configs.jwt.jwtKey);
+        let token = jwt.sign(userInfo, configs.jwt.jwtKey, { expiresIn: 60 * 60 });
+
         // 将token设置到返回头信息中
         ctx.set("authorization", token);
 
