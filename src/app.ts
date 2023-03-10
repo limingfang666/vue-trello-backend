@@ -36,7 +36,13 @@ app.use(async (ctx: Context, next: Next) => {
     if (token) {
         // koa的context中本身没有userInfo信息，需要自定义类型文件
         // UserInfo接口声明在global.d.ts文件中
-        ctx.userInfo = (jwt.verify(token, configs.jwt.jwtKey) as UserInfo);
+        try {
+            if(ctx.request.url!=="/api/v1/user/login" && ctx.request.url!=="/api/v1/user/register" ){
+                ctx.userInfo = (jwt.verify(token, configs.jwt.jwtKey) as UserInfo);
+            }
+        } catch (error) {
+            throw Boom.conflict("token信息有误");
+        }
     }
     await next();
 });
@@ -58,7 +64,6 @@ app.use(async (ctx: Context, next: Next) => {
             }
 
             // 500错误以外，其他业务逻辑本身存在的错误另外处理
-            console.log(err+"----------------");
             if (err.output) {
                 status = err.output.statusCode;
                 body = { ...err.output.payload }

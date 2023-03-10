@@ -16,12 +16,22 @@
         "migration:create:AttachmentInit": "sequelize migration:create --name AttachmentInit",
         "migration:create:CardAttachmentInit": "sequelize migration:create --name CardAttachmentInit",
         "migration:create:CommentInit": "sequelize migration:create --name CommentInit",
+
         "db:migrate": "sequelize db:migrate",
         "db:migrate:undo": "sequelize db:migrate:undo",
         "db:migrate:undo:all": "sequelize db:migrate:undo:all",
-        "seed:create": "sequelize seed:create --name UserInit",
+
+        "seed:create:UserInit": "sequelize seed:create --name UserInit",
+        "seed:create:BoardInit": "sequelize seed:create --name BoardInit",
+        "seed:create:BoardListInit": "sequelize seed:create --name BoardListInit",
+        "seed:create:BoardListCardInit": "sequelize seed:create --name BoardListCardInit",
+        "seed:create:AttachmentInit": "sequelize seed:create --name AttachmentInit",
+        "seed:create:CardAttachmentInit": "sequelize seed:create --name CardAttachmentInit",
+        "seed:create:CommentInit": "sequelize seed:create --name CommentInit",
+
         "db:seed:all": "sequelize db:seed:all",
         "db:seed:undo:all": "sequelize db:seed:undo:all",
+
         "db:init": "sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
         "db:redo": "sequelize db:drop && npm run db:init"
     },

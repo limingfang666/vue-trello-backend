@@ -23,7 +23,7 @@ export default async function authorization(
 
     // 校验请求头里是否存在token
     let authorization = ctx.request.header.authorization;
-    console.log('authorization', authorization);
+    
     if(!authorization){
       ctx.body = {
         code: 1,
@@ -31,7 +31,7 @@ export default async function authorization(
         error: 400,
         mes: '没有权限请求'
       }
-      return;
+      throw Boom.unauthorized("token不存在，没有权限请求");
     }
     authorization = authorization.split(' ')[1];
    
@@ -49,21 +49,25 @@ export default async function authorization(
             error: 400,
             mes: '登录已过期，请重新登录'
           }
-        return;
+          throw Boom.unauthorized("token失效");
       }
     }
 
-    // 判断是否合法
-    let decode = await jwt.decode(authorization);
-    if(!decode){
-      ctx.body = {
-        code: 1,
-        data:{},
-        error: 400,
-        mes: 'token不合法，请检查后重试'
+    // 判断是否合法(decode方法里面必须是对象)
+    if(typeof authorization === "string"){
+      let decode = await jwt.decode(JSON.parse(authorization));
+
+      if(!decode){
+        ctx.body = {
+          code: 1,
+          data:{},
+          error: 400,
+          mes: 'token不合法，请检查后重试'
+        }
+        throw Boom.unauthorized("token不合法，请检查后重试");
       }
-      return;
     }
+    
 
     await next();
 }

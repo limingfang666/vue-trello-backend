@@ -36,12 +36,11 @@ class BoardController {
      /**
      * 查询所有面板
      */
-    @Get('/board')
+    @Get('/getAllBoards')
     async getAllBoards(
         @Ctx() ctx: Context
     ){
         let boards = await BoardModel.findAll();
-        console.log(boards);
         if(boards.length===0){
             throw Boom.notFound("查找面板失败：","无面板相关记录");
         }

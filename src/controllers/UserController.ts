@@ -52,7 +52,7 @@ class UserController {
         return ctx.body = {
             id: newUser.id,
             name,
-            createAt: newUser.createdAt
+            createAt: newUser.createdAt,
         }
     }
 
@@ -83,7 +83,7 @@ class UserController {
         }
 
         let token = jwt.sign(userInfo, configs.jwt.jwtKey, { expiresIn: 60 * 60 });
-
+        
         // 将token设置到返回头信息中
         ctx.set("authorization", token);
 
